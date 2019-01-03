@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/ClientServer.dir/main.cpp.o  -o ClientServer 
