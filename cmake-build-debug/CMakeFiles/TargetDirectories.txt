@@ -1,0 +1,3 @@
+/home/eyal/CLionProjects/ClientServer/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/eyal/CLionProjects/ClientServer/cmake-build-debug/CMakeFiles/ClientServer.dir
+/home/eyal/CLionProjects/ClientServer/cmake-build-debug/CMakeFiles/edit_cache.dir
