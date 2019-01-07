@@ -9,7 +9,12 @@
 #include "Server.h"
 
 class MySerialServer : server_side::Server {
-
+private:
+    int sock_fd, client_sock_fd;
+    bool stop;
+public:
+    virtual void open(int port, ClientHandler c);
+    virtual void stop();
 };
 
 
