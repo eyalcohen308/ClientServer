@@ -1,9 +1,9 @@
 #include <iostream>
+
 #include "Solvers/Solver.h"
 #include "Solvers/StringReverser.h"
 #include "CacheManagers/CacheManager.h"
 #include "CacheManagers/FileCacheManager.h"
-
 int main() {
 
     Solver<string, string> *solver = new StringReverser();
