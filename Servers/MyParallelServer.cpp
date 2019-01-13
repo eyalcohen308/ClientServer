@@ -75,7 +75,7 @@ void MyParallelServer::start(SocketData *params) {
         perror("ERROR on binding");
         exit(1);
     }
-    //TODO שיננו את המקסימומי
+    //TODO ??
     if (listen(serverSocket, MAX_CONNECTED_CLIENTS) < 0) {
         perror("listen error");
         exit(1);
