@@ -8,14 +8,12 @@
 #include "../ClientHandlers/ClientHandler.h"
 
 namespace server_side {
-    class Server;
+    class Server {
+    public:
+//        Server() {}; // ctor- empty for now
+        virtual void open(int port, ClientHandler *c)=0;
+// getting port to listen, open the server and wait for clients
+        virtual void stop() = 0; // close the server
+    };
 }
-
-class server_side::Server {
-public:
-    Server() {}; // ctor- empty for now
-    virtual void open(int port, ClientHandler *c); // getting port to listen, open the server and wait for clients
-    virtual void stop(); // close the server
-};
-
 #endif //CLIENTSERVER_SERVER_H

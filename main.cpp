@@ -12,7 +12,7 @@ int main() {
     CacheManager<string, string> *c = new FileCacheManager<string, string>();
     c->saveSolutionFor(name, solution);
     if (c->hasSolutionTo(name)) {
-        cout << *(c->getSolutionTo(name)) << endl;
+        cout << (c->getSolutionTo(name)) << endl;
     }
     delete (solver);
     delete (c);

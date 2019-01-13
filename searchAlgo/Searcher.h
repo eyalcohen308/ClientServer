@@ -6,11 +6,11 @@
 #define CLIENTSERVER_SEARCHER_H
 
 #include "Searchable.h"
-
+#include "vector"
 template<class T>
 class Searcher {
     // search method
-    virtual Solution search(Searchable<T> *searchable);
+    virtual std::vector<T> search(Searchable<T> *searchable);
 
     //  get how many nodes were evaluated by the algorithm
     virtual int getNumOfNodesEvaluated() = 0; // pure virtual

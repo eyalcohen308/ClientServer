@@ -15,8 +15,8 @@
 #include <sys/socket.h>
 
 #include <strings.h>
-
-class MySerialServer : server_side::Server {
+using namespace server_side;
+class MySerialServer : Server {
 private:
     int sock_fd, client_sock_fd;
     struct sockaddr_in m_socket;
@@ -28,7 +28,10 @@ public:
 
     virtual void open(int port, ClientHandler *c);
 
-    virtual void stop();
+    virtual void stop(){
+        this->should_stop = false;
+        close(this->sock_fd);
+    }
 };
 
 

@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
 project(ClientServer)
 
-set(CMAKE_CXX_STANDARD 14)
+#set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread")
 
 add_executable(ClientServer main.cpp Servers/Server.h Servers/MySerialServer.cpp
 Servers/MySerialServer.h ClientHandlers/ClientHandler.h
@@ -12,5 +13,5 @@ searchAlgo/Searchable.h searchAlgo/Searcher.h searchAlgo/State.cpp searchAlgo/St
 
 searchAlgo/BestFirstSearch.cpp searchAlgo/BestFirstSearch.h Servers/MyParallelServer.cpp Servers/MyParallelServer.h
 
-ClientHandlers/MyClientHandler.cpp ClientHandlers/MyClientHandler.h)
+ClientHandlers/MyClientHandler.cpp ClientHandlers/MyClientHandler.h Matrix/Matrix.cpp Matrix/Matrix.h Matrix/MatrixResult.cpp Matrix/MatrixResult.h)
 

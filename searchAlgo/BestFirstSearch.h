@@ -27,7 +27,7 @@ public:
     }
 
     // search method
-    virtual Solution search(Searchable<T> *searchable){
+    virtual std::vector<T> search(Searchable<T> *searchable){
         open_list.push(searchable->getInitState());
         std::vector<State<T>> close_list = new std::vector<T>;
         while (getOpenListSize()>0){
