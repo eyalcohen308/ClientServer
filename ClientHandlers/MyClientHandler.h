@@ -23,16 +23,20 @@ class MyClientHandler : public ClientHandler {
     // members
     Solver<vector<vector<string>>, string> *solver;
     CacheManager<string, string> *cache_Manager;
+
     void writeSolutionToSocket(string sol, int sock_id);
+
     string getLineFromSocket(int sock_id);
 
 public:
     MyClientHandler(Solver<vector<vector<string>>, string> *solver,
                     CacheManager<string, string> *cache_Manager)
-            : solver(solver),
-              cache_Manager(cache_Manager) {};
+            : solver(solver), cache_Manager(cache_Manager) {};
+
     string getData(int sock_id);
+
     virtual void handleClient(int sock_id);
+
     vector<vector<string>> lexer(string input);
 };
 
