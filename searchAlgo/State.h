@@ -4,7 +4,10 @@
 
 #ifndef CLIENTSERVER_STATE_H
 #define CLIENTSERVER_STATE_H
-
+/**
+ *
+ * @tparam T
+ */
 template <class T>
 class State {
     T state;
