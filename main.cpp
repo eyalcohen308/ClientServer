@@ -5,6 +5,7 @@
 #include "CacheManagers/FileCacheManager.h"
 
 int main() {
+
     Solver<string, string> *solver = new StringReverser();
     string name = "ronen";
     string solution = solver->solve(name);
@@ -15,4 +16,5 @@ int main() {
     }
     delete (solver);
     delete (c);
+
 }
