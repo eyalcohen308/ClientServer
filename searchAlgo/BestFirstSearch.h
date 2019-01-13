@@ -36,12 +36,12 @@ public:
             if (n==searchable->getGoalState()){
                 return backTrace;
             }
-            std::vector<State<T>> succerssors = searchable->getAllPosibaleStates(n);
+            std::vector<State<T>> succerssors = searchable->getAllPosiableStates(n);
             for(typename std::vector<State<T>>::iterator it = succerssors.begin(); it != succerssors.end(); it++){
                 // if not found in the open and in the close lists
                 if((std::find(close_list.begin(),close_list.end(), (*it))==close_list.end)
                 && (std::find(open_list.begin(),open_list.end(), (*it))==open_list.end)){
-                    // TODO - do s.setCameFrom(n); in getAllPosibaleStates
+                    // TODO - do s.setCameFrom(n); in getAllPosiableStates
                     open_list.push((*it)); // add succerssors to open list
                 } else {
                     //  if( new path is better than the prev one){

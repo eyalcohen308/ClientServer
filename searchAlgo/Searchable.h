@@ -7,10 +7,14 @@
 
 #include "State.h"
 #include <vector>
-template <class T>
-class Searchable{
-    virtual State<T> getInitState();
-    virtual State<T> getGoalState();
-    virtual std::vector<State<T>> getAllPosibaleStates(State<T> s);
+
+template<class T>
+class Searchable {
+    virtual State<T> *getInitState() = 0;
+
+    virtual State<T> *getGoalState() = 0;
+
+    virtual std::vector<State<T> *> getAllPosiableStates(State<T> *s) = 0;
 };
+
 #endif //CLIENTSERVER_SEARCHABLE_H

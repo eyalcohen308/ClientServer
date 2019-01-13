@@ -9,4 +9,8 @@ ClientHandlers/MyTestClientHandler.cpp ClientHandlers/MyTestClientHandler.h
 Solvers/StringReverser.cpp Solvers/StringReverser.h CacheManagers/CacheManager.h
 CacheManagers/FileCacheManager.cpp CacheManagers/FileCacheManager.h
 searchAlgo/Searchable.h searchAlgo/Searcher.h searchAlgo/State.cpp searchAlgo/State.h
-searchAlgo/BestFirstSearch.cpp searchAlgo/BestFirstSearch.h Servers/MyParallelServer.cpp Servers/MyParallelServer.h)
+
+searchAlgo/BestFirstSearch.cpp searchAlgo/BestFirstSearch.h Servers/MyParallelServer.cpp Servers/MyParallelServer.h
+
+ClientHandlers/MyClientHandler.cpp ClientHandlers/MyClientHandler.h)
+

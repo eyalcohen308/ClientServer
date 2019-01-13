@@ -15,7 +15,7 @@ class CacheManager {
 public:
     virtual bool hasSolutionTo(const Problem &problem) = 0;
 
-    virtual Solution *getSolutionTo(const Problem &problem) = 0;
+    virtual Solution getSolutionTo(const Problem &problem) = 0;
 
     virtual void saveSolutionFor(const Problem problem, const Solution solution) = 0;
 

@@ -29,7 +29,7 @@ public:
         return (!(data_base.find(problem) == data_base.end()));
     }
 
-    virtual Solution *getSolutionTo(const Problem &problem) {
+    virtual Solution getSolutionTo(const Problem &problem) {
         if (hasSolutionTo(problem)) {
             return &data_base.at(problem);
         }

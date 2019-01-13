@@ -13,7 +13,7 @@ class Searcher {
     virtual Solution search(Searchable<T> *searchable);
 
     //  get how many nodes were evaluated by the algorithm
-    virtual int getNumOfNodesEvaluated();
+    virtual int getNumOfNodesEvaluated() = 0; // pure virtual
 };
 
 #endif //CLIENTSERVER_SEARCHER_H
