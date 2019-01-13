@@ -13,11 +13,11 @@ vector<State<point> *> Matrix::getAllPossibleStates(State<point> *state) {
     if (i != 0 && checkIfValidNeighbor(i - 1, j)) neighbors.push_back(matrix[i - 1][j]);
     if (i != rows - 1 && checkIfValidNeighbor(i + 1, j))neighbors.push_back(matrix[i + 1][j]);
     if (j != 0 && checkIfValidNeighbor(i, j - 1))neighbors.push_back(matrix[i][j - 1]);
-    if (j != columns - 1)neighbors.push_back(matrix[i][j + 1]);
+    if (j != columns - 1&& checkIfValidNeighbor(i, j + 1))neighbors.push_back(matrix[i][j + 1]);
     return neighbors;
 }
 
-bool Matrix::checkIfValidNeighbor(int col, int row) {
+bool Matrix::checkIfValidNeighbor(int row, int col) {
     return !(matrix[row][col]->getCost() == -1);
 }
 

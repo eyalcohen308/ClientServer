@@ -50,14 +50,14 @@ public:
     /**
      * update visited
      */
-    void updateVisited() {
+    void visit() {
         this->has_visited = true;
     }
 
     /**
      * get visit status
      */
-    bool visited() {
+    bool is_visited() {
         return this->has_visited;
     }
 

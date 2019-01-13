@@ -9,7 +9,7 @@
 template<class Problem, class Solution>
 class Solver {
 public:
-    virtual Solution solve(const Problem &problem) = 0;
+    virtual Solution solve(const Problem problem) = 0;
 };
 
 

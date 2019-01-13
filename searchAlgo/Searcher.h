@@ -7,10 +7,12 @@
 
 #include "Searchable.h"
 #include "vector"
+
 template<class T>
 class Searcher {
+public:
     // search method
-    virtual std::vector<T> search(Searchable<T> *searchable);
+    virtual std::vector<State<T>*> search(Searchable<T> *searchable) = 0;
 
     //  get how many nodes were evaluated by the algorithm
     virtual int getNumOfNodesEvaluated() = 0; // pure virtual
