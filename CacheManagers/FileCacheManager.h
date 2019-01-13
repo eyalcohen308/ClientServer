@@ -22,7 +22,7 @@ private:
 public:
 
     FileCacheManager() {
-        loadSolutionFromDisk();
+        loadSolutionsFromDisk();
     }
 
     virtual bool hasSolutionTo(const Problem &problem) {
@@ -31,45 +31,40 @@ public:
 
     virtual Solution getSolutionTo(const Problem &problem) {
         if (hasSolutionTo(problem)) {
-            return &data_base.at(problem);
+            return data_base.at(problem);
         }
         //TODO: decide if null or execption.
         return NULL;
     }
 
-    virtual void loadSolutionFromDisk() {
+    virtual void loadSolutionsFromDisk() {
         // save to file each problem and solution.
-        ifstream input;
-        input.open("input.txt", ios::in | ios::app);
+        fstream input;
+        input.open("input.txt", fstream::in | fstream::out | fstream::app);
         if (!input.is_open()) {
             throw runtime_error("unable to open file");
         }
-        while (!input.eof()) {
-            Problem p;
-            Solution s;
-            //read Problem Data to problem object
-            input.read((char *) &p, sizeof(p));
-            //read solution Data to solution object
-            input.read((char *) &s, sizeof(s));
-            if (p == "") {
-                return;
-            }
-            data_base.insert(pair<Problem, Solution>(p, s));
+        string line;
+        while (getline(input, line)) {
+            size_t pos = line.find("end$");
+            string problem = line.substr(0, pos+3);
+            string solution = line.substr(pos + 4, line.length() - 1);
+            data_base.insert(pair<Problem,Solution>(problem,solution));
         }
     }
+
     ~FileCacheManager() {
         // save to file each problem and solution.
-        ofstream input;
-        input.open("input.txt", ios::app);
-//        if (!input.is_open()) {
-//            throw runtime_error("unable to open file");
-//        }
+        fstream input;
+        input.open("input.txt", std::ofstream::out | std::ofstream::trunc);
+
         for (auto it : data_base) {
             // write the problem data to file.
-            input.write((char *) &(it.first), sizeof(it.first));
+            input << (it.first) << "$";
             // write the solution data to file.
-            input.write((char *) &(it.second), sizeof(it.second));
+            input << (it.second) << endl;
         }
+        input.close();
     }
 
     void saveSolutionFor(const Problem p, const Solution s) {

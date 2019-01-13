@@ -30,17 +30,17 @@ string MyClientHandler::getData(int sock_id) {
  */
 vector<vector<string>> MyClientHandler::lexer(string input) {
     vector<vector<string >> after_lex;
-    vector<string > vec_lex;
+    vector<string> vec_lex;
     string temp;
-    regex number("[0-9.-]*");
+    regex number("[0-9.]*");
     smatch match_results;
-    while(input.size()>0) { // have more to read
+    while (input.size() > 0) { // have more to read
         if (input[0] == '\n') {
             input = input.substr(1, input.size());
             after_lex.push_back(vec_lex);
             temp = ""; // clear to list
             vec_lex.clear();
-        } else if ((input[0] >= 48 && input[0] < 58)||(input[0]=='-')) {
+        } else if ((input[0] >= 48 && input[0] < 58)) {
             // if valid number or minus
             regex_search(input, match_results, number);
             for (unsigned i = 0; i < match_results.size(); ++i) {
@@ -53,12 +53,18 @@ vector<vector<string>> MyClientHandler::lexer(string input) {
         } else if ((input[0] >= 65 && input[0] <= 90) || (input[0] >= 97 && input[0] <= 122)) {
             // if a char- "end" - return and finish
             return after_lex;
+        } else if (input[0] == 45) {
+
+            temp = "-1";
+            vec_lex.push_back(temp);
+            input = input.substr(temp.size(), input.size());
+            temp = "";
+
         } else {
             temp = ""; // clear to list
             input = input.substr(1, input.size());
         }
     }
-//    int h = 0; - //TODO delete this line
     return after_lex;
 }
 
@@ -120,12 +126,11 @@ void MyClientHandler::writeSolutionToSocket(string sol, int sock_id) {
 string MyClientHandler::getLineFromSocket(int sock_id) {
     char buf[CHARS_TO_BUFFER];
     ssize_t readen_bytes;
-    readen_bytes = read(sock_id, buf, CHARS_TO_BUFFER-1);
+    readen_bytes = read(sock_id, buf, CHARS_TO_BUFFER - 1);
     if (readen_bytes < 0) {
         __throw_bad_exception();
     } else if (readen_bytes == 0) {
         //connection closed
-        int y = 0;
     } else {
         buf[readen_bytes] = NULL;
     }
