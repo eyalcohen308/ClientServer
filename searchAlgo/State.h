@@ -5,7 +5,6 @@
 #ifndef CLIENTSERVER_STATE_H
 #define CLIENTSERVER_STATE_H
 
-
 template<class T>
 class State {
     T state;

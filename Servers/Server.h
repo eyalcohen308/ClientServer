@@ -7,14 +7,15 @@
 
 #include "../ClientHandlers/ClientHandler.h"
 
-namespace server_side{
+namespace server_side {
     class Server;
 }
 
-class server_side::Server{
-    Server(){}; // ctor- empty for now
+class server_side::Server {
 public:
-    virtual void open(int port, ClientHandler c); // getting port to listen, open the server and wait for clients
+    Server() {}; // ctor- empty for now
+    virtual void open(int port, ClientHandler *c); // getting port to listen, open the server and wait for clients
     virtual void stop(); // close the server
 };
+
 #endif //CLIENTSERVER_SERVER_H
