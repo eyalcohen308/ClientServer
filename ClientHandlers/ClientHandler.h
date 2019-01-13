@@ -10,7 +10,7 @@ using namespace std;
 class ClientHandler {
 public:
     ClientHandler() {}; // // ctor- empty for now
-    virtual void handleClient(istream input_stream, ostream output_stream);
+    virtual void handleClient(int id);
 };
 
 
