@@ -55,3 +55,14 @@ void Matrix::createMatrix(vector<vector<string>> &lines) {
     begin = matrix[stoi(begin_vec[0])][stoi(begin_vec[1])];
     end = matrix[stoi(end_vec[0])][stoi(end_vec[1])];
 }
+
+//TODO check &
+vector<State<point> *> Matrix::getAllStates() {
+    vector<State<point> *> states;
+    for(auto &row:matrix){
+        for(auto &s:row){
+            states.push_back(s);
+        }
+    }
+    return states;
+}
