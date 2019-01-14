@@ -1,18 +1,18 @@
 //
-// Created by tomer on 1/7/19.
+// Created by eyal on 1/14/19.
 //
 
-#ifndef CLIENTSERVER_BESTFIRSTSEARCH_H
-#define CLIENTSERVER_BESTFIRSTSEARCH_H
+#ifndef CLIENTSERVER_ASTAR_H
+#define CLIENTSERVER_ASTAR_H
 
-#include <unordered_map>
+
 #include <queue>
+#include <unordered_map>
 #include <algorithm>
 #include "../searchAlgo/Searcher.h"
 
 template<class T>
-
-class BestFirstSearch : public Searcher<T> {
+class AStar : public Searcher<T> {
     enum Color {
         WHITE, GREY, BLACK
     };
@@ -20,7 +20,7 @@ class BestFirstSearch : public Searcher<T> {
     class CompareState {
     public:
         bool operator()(State<T> *first, State<T> *second) {
-            return first->getPathValue() > second->getPathValue();
+            return first->getPathValue() + first->getDistance() > second->getPathValue() + second->getDistance();
         }
     };
 
@@ -29,13 +29,12 @@ class BestFirstSearch : public Searcher<T> {
     int evaluate_nodes;
     std::unordered_map<State<T> *, Color> state_to_color;
 
-
     std::vector<State<T> *> backTrace(State<T> *goal) {
         std::vector<State<T> *> path;
         State<T> *curr_state = goal;
-        while(curr_state!= nullptr){
+        while (curr_state != nullptr) {
             path.push_back(curr_state);
-            curr_state=curr_state->getCameFrom();
+            curr_state = curr_state->getCameFrom();
         }
         std::reverse(path.begin(), path.end());
         return path;
@@ -49,12 +48,8 @@ class BestFirstSearch : public Searcher<T> {
     }
 
 public:
+    AStar() {
 
-    /**
-     * Ctor
-     */
-    BestFirstSearch() {
-        evaluate_nodes = 0;
     }
 
     /**
@@ -66,6 +61,10 @@ public:
         // init all states color to white
         initStatesColor(searchable);
         State<T> *first = searchable->getInitState();
+        /**
+         * init the start state with the hiuristic value(distance)
+         */
+        searchable->setDistance(first);
         state_to_color.at(first) = GREY;
         open_list.push(first);
         while (getOpenListSize() > 0) {
@@ -74,13 +73,15 @@ public:
                 return backTrace(n);
             }
             std::vector<State<T> *> succerssors = searchable->getAllPossibleStates(n);
-            for (typename std::vector<State<T> *>::iterator it = succerssors.begin(); it != succerssors.end(); it++) {
+            for (typename std::vector<State<T> *>::iterator it = succerssors.begin();
+                 it != succerssors.end(); it++) {
                 // if not found in the open and in the close lists
                 State<T> *curr_state = (*it);
                 if (state_to_color.at(curr_state) == WHITE) {
                     state_to_color[curr_state] = GREY; // update color
                     curr_state->setCameFrom(n); // set your dad
                     curr_state->addPathValue(n->getPathValue()); // add cost
+                    searchable->setDistance(curr_state);
                     open_list.push(curr_state); // add succerssors to open list
                 } else {
                     double new_path_val = n->getPathValue() + curr_state->getCost();
@@ -89,7 +90,8 @@ public:
                         curr_state->setCameFrom(n); // update dad
                         curr_state->setPathValue(new_path_val); // update path
                         // if not in open add it to open
-                        if (state_to_color.at(curr_state) == BLACK){
+                        if (state_to_color.at(curr_state) == BLACK) {
+                            searchable->setDistance(curr_state);
                             open_list.push(curr_state);
                         }
                     }
@@ -122,4 +124,4 @@ public:
 };
 
 
-#endif //CLIENTSERVER_BESTFIRSTSEARCH_H
+#endif //CLIENTSERVER_ASTAR_H

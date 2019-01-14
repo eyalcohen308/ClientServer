@@ -12,6 +12,7 @@ class State {
     State<T> *came_from;
     bool has_visited;
     double path_value;
+    double distance;
 
 public:
     /**
@@ -22,7 +23,8 @@ public:
     State(T stat, double cost) : state(stat), cost(cost) {
         has_visited = false;
         path_value = cost;
-        came_from= nullptr;
+        came_from = nullptr;
+        distance = 0;
     };
 
     /**
@@ -40,6 +42,20 @@ public:
      */
     T getState() {
         return this->state;
+    }
+/**
+ * set distance by hiuristic.
+ * @param d double to set.
+ */
+    void setDistance(double d) {
+        this->distance = d;
+    }
+/**
+ * get the distance have by hiuristic.
+ * @return double distance.
+ */
+    double getDistance() {
+        return this->distance;
     }
 
     /**

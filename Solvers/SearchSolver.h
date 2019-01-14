@@ -11,7 +11,9 @@
 #include "../searchAlgo/Searcher.h"
 #include "../Matrix/Matrix.h"
 #include "../Matrix/MatrixResult.h"
-
+enum Color {
+    WHITE, GREY, BLACK
+};
 using namespace std;
 
 template<class T, class Solution>

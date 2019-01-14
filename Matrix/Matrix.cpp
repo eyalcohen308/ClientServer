@@ -13,7 +13,7 @@ vector<State<point> *> Matrix::getAllPossibleStates(State<point> *state) {
     if (i != 0 && checkIfValidNeighbor(i - 1, j)) neighbors.push_back(matrix[i - 1][j]);
     if (i != rows - 1 && checkIfValidNeighbor(i + 1, j))neighbors.push_back(matrix[i + 1][j]);
     if (j != 0 && checkIfValidNeighbor(i, j - 1))neighbors.push_back(matrix[i][j - 1]);
-    if (j != columns - 1&& checkIfValidNeighbor(i, j + 1))neighbors.push_back(matrix[i][j + 1]);
+    if (j != columns - 1 && checkIfValidNeighbor(i, j + 1))neighbors.push_back(matrix[i][j + 1]);
     return neighbors;
 }
 
@@ -59,10 +59,19 @@ void Matrix::createMatrix(vector<vector<string>> &lines) {
 //TODO check &
 vector<State<point> *> Matrix::getAllStates() {
     vector<State<point> *> states;
-    for(auto &row:matrix){
-        for(auto &s:row){
+    for (auto &row:matrix) {
+        for (auto &s:row) {
             states.push_back(s);
         }
     }
     return states;
+}
+/**
+ * set distance hiuristic by function to the state.
+ * @param current state.
+ */
+void Matrix::setDistance(State<point> *current) {
+    double hiuristic = abs(current->getState().first - this->end->getState().first)
+                       + abs(current->getState().second - this->end->getState().second);
+    current->setDistance(hiuristic);
 }

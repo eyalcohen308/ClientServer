@@ -35,6 +35,8 @@ public:
 
     virtual vector<State<point> *> getAllStates();
 
+    virtual void setDistance(State<point> * current);
+
     bool checkIfValidNeighbor(int col, int row);
 };
 
