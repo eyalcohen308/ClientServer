@@ -18,11 +18,11 @@
 using namespace server_side;
 class MySerialServer : Server {
 private:
-    int sock_fd, client_sock_fd;
+    int sock_fd;
     struct sockaddr_in m_socket;
     bool should_stop;
 public:
-    MySerialServer(int sock_fd) : sock_fd(sock_fd) {
+    MySerialServer() {
         should_stop = false;
     }
 
