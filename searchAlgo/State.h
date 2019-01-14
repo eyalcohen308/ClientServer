@@ -11,6 +11,7 @@ class State {
     double cost;
     State<T> *came_from;
     bool has_visited;
+    double path_value;
 
 public:
     /**
@@ -20,6 +21,8 @@ public:
      */
     State(T stat, double cost) : state(stat), cost(cost) {
         has_visited = false;
+        path_value = cost;
+        came_from= nullptr;
     };
 
     /**
@@ -71,8 +74,31 @@ public:
     /**
      * get cost
      */
-    double getCost(){
+    double getCost() {
         return this->cost;
+    }
+
+    /**
+    * get distance
+    */
+    double getPathValue() {
+        return this->path_value;
+    }
+
+    /**
+     * set new path value
+     * @param new_pv
+     */
+    void setPathValue(double new_pv) {
+        this->path_value = new_pv;
+    }
+
+    /**
+     * add cost to the path
+     * @param path
+     */
+    void addPathValue(double path) {
+        this->path_value += path;
     }
 };
 

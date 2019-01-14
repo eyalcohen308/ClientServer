@@ -33,6 +33,8 @@ public:
 
     virtual vector<State<point> *> getAllPossibleStates(State<point> *state);
 
+    virtual vector<State<point> *> getAllStates();
+
     bool checkIfValidNeighbor(int col, int row);
 };
 
