@@ -19,6 +19,8 @@ public:
 
     virtual void saveSolutionFor(const Problem problem, const Solution solution) = 0;
 
+    virtual void writeSolutions() = 0;
+
     virtual ~CacheManager() {
         cout << "hello" << endl;
     }
