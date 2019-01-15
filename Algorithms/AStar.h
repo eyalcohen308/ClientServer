@@ -16,6 +16,7 @@ class AStar : public Searcher<T> {
     enum Color {
         WHITE, GREY, BLACK
     };
+
     // compare class for the priority_queue
     class CompareState {
     public:
@@ -70,6 +71,8 @@ public:
         while (getOpenListSize() > 0) {
             State<T> *n = popOpenList();
             if (n == searchable->getGoalState()) {
+                this->solution_value = n->getPathValue();
+                this->open_list = std::priority_queue<State<T> *, std::vector<State<T> *>, CompareState>();
                 return backTrace(n);
             }
             std::vector<State<T> *> succerssors = searchable->getAllPossibleStates(n);
@@ -84,7 +87,7 @@ public:
                     searchable->setDistance(curr_state);
                     open_list.push(curr_state); // add succerssors to open list
                 } else {
-                    double new_path_val = n->getPathValue() + curr_state->getCost();
+                    int new_path_val = n->getPathValue() + curr_state->getCost();
                     if (new_path_val < curr_state->getPathValue()) {
                         // if new path is better than the prev one
                         curr_state->setCameFrom(n); // update dad
@@ -98,6 +101,8 @@ public:
                 }
             }
         }
+        this->solution_value = -1;
+        this->open_list = std::priority_queue<State<T> *, std::vector<State<T> *>, CompareState>();
         std::vector<State<T> *> empty;
         return empty;
     }

@@ -18,7 +18,7 @@ vector<State<point> *> Matrix::getAllPossibleStates(State<point> *state) {
 }
 
 bool Matrix::checkIfValidNeighbor(int row, int col) {
-    return !(matrix[row][col]->getCost() == -1);
+    return (!(matrix[row][col]->getCost() == -1));
 }
 
 Matrix::Matrix(vector<vector<string>> lines) {
@@ -43,7 +43,7 @@ void Matrix::createMatrix(vector<vector<string>> &lines) {
         vector<State<point> *> row;
         for (int j = 0; j < columns_size; ++j) {
             // create the state by indexes and cost.
-            double cost = stod(lines[i][j]);
+            int cost = stod(lines[i][j]);
             point location(i, j);
             auto *state = new State<point>(location, cost);
             row.push_back(state);
@@ -71,7 +71,7 @@ vector<State<point> *> Matrix::getAllStates() {
  * @param current state.
  */
 void Matrix::setDistance(State<point> *current) {
-    double hiuristic = abs(current->getState().first - this->end->getState().first)
+    int hiuristic = abs(current->getState().first - this->end->getState().first)
                        + abs(current->getState().second - this->end->getState().second);
     current->setDistance(hiuristic);
 }

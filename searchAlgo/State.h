@@ -8,11 +8,11 @@
 template<class T>
 class State {
     T state;
-    double cost;
+    int cost;
     State<T> *came_from;
     bool has_visited;
-    double path_value;
-    double distance;
+    int path_value;
+    int distance;
 
 public:
     /**
@@ -20,7 +20,7 @@ public:
      * @param stat
      * @param cost
      */
-    State(T stat, double cost) : state(stat), cost(cost) {
+    State(T stat, int cost) : state(stat), cost(cost) {
         has_visited = false;
         path_value = cost;
         came_from = nullptr;
@@ -45,16 +45,16 @@ public:
     }
 /**
  * set distance by hiuristic.
- * @param d double to set.
+ * @param d int to set.
  */
-    void setDistance(double d) {
+    void setDistance(int d) {
         this->distance = d;
     }
 /**
  * get the distance have by hiuristic.
- * @return double distance.
+ * @return int distance.
  */
-    double getDistance() {
+    int getDistance() {
         return this->distance;
     }
 
@@ -90,14 +90,14 @@ public:
     /**
      * get cost
      */
-    double getCost() {
+    int getCost() {
         return this->cost;
     }
 
     /**
     * get distance
     */
-    double getPathValue() {
+    int getPathValue() {
         return this->path_value;
     }
 
@@ -105,7 +105,7 @@ public:
      * set new path value
      * @param new_pv
      */
-    void setPathValue(double new_pv) {
+    void setPathValue(int new_pv) {
         this->path_value = new_pv;
     }
 
@@ -113,7 +113,7 @@ public:
      * add cost to the path
      * @param path
      */
-    void addPathValue(double path) {
+    void addPathValue(int path) {
         this->path_value += path;
     }
 };

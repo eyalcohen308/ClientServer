@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <queue>
 #include <algorithm>
+#include <iostream>
 #include "../searchAlgo/Searcher.h"
 
 template<class T>
@@ -72,6 +73,9 @@ public:
         while (getOpenListSize() > 0) {
             State<T> *n = popOpenList();
             if (n == searchable->getGoalState()) {
+                this->solution_value = n->getPathValue();
+                // clear the queqe
+                this->open_list = std::priority_queue<State<T> *, std::vector<State<T> *>, CompareState>();
                 return backTrace(n);
             }
             std::vector<State<T> *> succerssors = searchable->getAllPossibleStates(n);
@@ -84,7 +88,7 @@ public:
                     curr_state->addPathValue(n->getPathValue()); // add cost
                     open_list.push(curr_state); // add succerssors to open list
                 } else {
-                    double new_path_val = n->getPathValue() + curr_state->getCost();
+                    int new_path_val = n->getPathValue() + curr_state->getCost();
                     if (new_path_val < curr_state->getPathValue()) {
                         // if new path is better than the prev one
                         curr_state->setCameFrom(n); // update dad
@@ -97,7 +101,10 @@ public:
                 }
             }
         }
+        this->solution_value = -1;
         std::vector<State<T> *> empty;
+        // clear the queqe
+        this->open_list = std::priority_queue<State<T> *, std::vector<State<T> *>, CompareState>();
         return empty;
     }
 

@@ -17,7 +17,7 @@ class BreadthFirstSearch : public Searcher<Problem> {
 private:
     int evaluated_nodes = 0;
 public:
-    BreadthFirstSearch(){}; // Ctor
+    BreadthFirstSearch() {}; // Ctor
     virtual vector<State<Problem> *> search(Searchable<Problem> *searchable) {
 
         // Create a queue for BFS
@@ -63,6 +63,7 @@ public:
         cur_state = searchable->getGoalState();
         State<Problem> *beginState = searchable->getInitState();
         if (cur_state->getCameFrom() == NULL) {
+            this->solution_value = -1;
             return path;
         }
         // insert path to vector
@@ -74,6 +75,7 @@ public:
         path.push_back(searchable->getInitState());
         // begin to the goal
         std::reverse(path.begin(), path.end());
+        this->solution_value = path.size();
         return path;
     }
 

@@ -65,15 +65,16 @@ public:
         State<Problem> *begin_state = searchable->getInitState();
         cur_state = goal;
         if (cur_state->getCameFrom() == NULL) {
+            this->solution_value = -1;
             return path;
         }
-        while (!(cur_state==begin_state)) {
+        while (!(cur_state == begin_state)) {
             path.push_back(cur_state);
             cur_state = cur_state->getCameFrom();
         }
         path.push_back(searchable->getInitState());
         std::reverse(path.begin(), path.end());
-
+        this->solution_value = path.size();
         return path;
 
     }

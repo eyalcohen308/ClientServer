@@ -10,12 +10,18 @@
 
 template<class T>
 class Searcher {
+protected:
+    int solution_value;
 public:
     // search method
-    virtual std::vector<State<T>*> search(Searchable<T> *searchable) = 0;
+    virtual std::vector<State<T> *> search(Searchable<T> *searchable) = 0;
 
     //  get how many nodes were evaluated by the algorithm
     virtual int getNumOfNodesEvaluated() = 0; // pure virtual
+
+    int getSolutionSize() {
+        return solution_value;
+    };
 };
 
 #endif //CLIENTSERVER_SEARCHER_H
