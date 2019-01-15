@@ -14,22 +14,36 @@
 
 using namespace std;
 
+vector<vector<string>> randomMatrix(int row, int col) {
+    vector<vector<string>> matrix;
+    for (int i = 0; i < row; ++i) {
+        vector<string> row_vec;
+        for (int j = 0; j < col; ++j) {
+            int r = rand() % 5;
+            if (r % 6 == 0) r = -1;
+            row_vec.push_back(to_string(r));
+        }
+        matrix.push_back(row_vec);
+    }
+    matrix[row - 1][col - 1] = to_string(rand() % 10+1);
+    matrix.push_back({"0", "0"});
+    matrix.push_back({to_string(row - 1), to_string(col - 1)});
+    return matrix;
+}
+
+void printMatrix(vector<vector<string>> matrix) {
+    for (int i = 0; i < matrix.size() - 2; i++) {
+        for (int j = 0; j < matrix[0].size(); j++) {
+            cout << matrix[i][j] + " ";
+        }
+        cout << "\n";
+    }
+}
+
 int main() {
 
-    vector<vector<string>> ff;
-    vector<string> dd = {"1", "1", "-1","-1", "3", "5","1"};
-    ff.push_back(dd);
-    vector<string> gg = {"5", "1", "1","1", "1", "1","-1"};
-    ff.push_back(gg);
-    vector<string> ww = {"1", "7", "2","2", "3", "1","10"};
-    ff.push_back(ww);
-    vector<string> ss = {"1", "7", "-1","-1", "3", "1","10"};
-    ff.push_back(ss);
-    vector<string> w = {"0", "0"};
-    ff.push_back(w);
-    vector<string> w0 = {"0", "6"};
-    ff.push_back(w0);
-
+    vector<vector<string>> matrix = randomMatrix(50,50);
+    printMatrix(matrix);
     auto *bfs = new BreadthFirstSearch<pair<int, int>>();
     auto *dfs = new DepthFirstSearch<pair<int, int>>();
     auto *astar = new AStar<pair<int, int>>();
@@ -40,18 +54,18 @@ int main() {
     auto *searchSolver3 = new SearchSolver<pair<int, int>, string>(astar);
     auto *searchSolver4 = new SearchSolver<pair<int, int>, string>(bestfirst);
 
-    string res1 = searchSolver1->solve(ff);
-    string res2 = searchSolver2->solve(ff);
-    string res3 = searchSolver3->solve(ff);
-    string res4 = searchSolver4->solve(ff);
+    string res1 = searchSolver1->solve(matrix);
+    string res2 = searchSolver2->solve(matrix);
+    string res3 = searchSolver3->solve(matrix);
+    string res4 = searchSolver4->solve(matrix);
 
-    cout << "bfs:\n" <<res1 << endl;
+    cout << "bfs:\n" << res1 << endl;
     cout << bfs->getNumOfNodesEvaluated() << endl;
-    cout << "dfs:\n" <<res2 << endl;
+    cout << "dfs:\n" << res2 << endl;
     cout << dfs->getNumOfNodesEvaluated() << endl;
-    cout << "Astar:\n" <<res3 << endl;
+    cout << "Astar:\n" << res3 << endl;
     cout << astar->getNumOfNodesEvaluated() << endl;
-    cout << "best first search:\n" <<res4 << endl;
+    cout << "best first search:\n" << res4 << endl;
     cout << bestfirst->getNumOfNodesEvaluated() << endl;
 //
 //    Solver<string, string> *solver = new StringReverser();

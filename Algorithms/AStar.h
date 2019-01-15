@@ -98,6 +98,8 @@ public:
                 }
             }
         }
+        std::vector<State<T> *> empty;
+        return empty;
     }
 
 

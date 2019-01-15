@@ -16,6 +16,7 @@ class BestFirstSearch : public Searcher<T> {
     enum Color {
         WHITE, GREY, BLACK
     };
+
     // compare class for the priority_queue
     class CompareState {
     public:
@@ -33,9 +34,9 @@ class BestFirstSearch : public Searcher<T> {
     std::vector<State<T> *> backTrace(State<T> *goal) {
         std::vector<State<T> *> path;
         State<T> *curr_state = goal;
-        while(curr_state!= nullptr){
+        while (curr_state != nullptr) {
             path.push_back(curr_state);
-            curr_state=curr_state->getCameFrom();
+            curr_state = curr_state->getCameFrom();
         }
         std::reverse(path.begin(), path.end());
         return path;
@@ -89,13 +90,15 @@ public:
                         curr_state->setCameFrom(n); // update dad
                         curr_state->setPathValue(new_path_val); // update path
                         // if not in open add it to open
-                        if (state_to_color.at(curr_state) == BLACK){
+                        if (state_to_color.at(curr_state) == BLACK) {
                             open_list.push(curr_state);
                         }
                     }
                 }
             }
         }
+        std::vector<State<T> *> empty;
+        return empty;
     }
 
 
