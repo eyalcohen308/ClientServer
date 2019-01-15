@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <queue>
 #include <algorithm>
+#include <iostream>
 #include "../searchAlgo/Searcher.h"
 
 template<class T>
@@ -16,6 +17,7 @@ class BestFirstSearch : public Searcher<T> {
     enum Color {
         WHITE, GREY, BLACK
     };
+
     // compare class for the priority_queue
     class CompareState {
     public:
@@ -33,9 +35,9 @@ class BestFirstSearch : public Searcher<T> {
     std::vector<State<T> *> backTrace(State<T> *goal) {
         std::vector<State<T> *> path;
         State<T> *curr_state = goal;
-        while(curr_state!= nullptr){
+        while (curr_state != nullptr) {
             path.push_back(curr_state);
-            curr_state=curr_state->getCameFrom();
+            curr_state = curr_state->getCameFrom();
         }
         std::reverse(path.begin(), path.end());
         return path;
@@ -71,6 +73,9 @@ public:
         while (getOpenListSize() > 0) {
             State<T> *n = popOpenList();
             if (n == searchable->getGoalState()) {
+                this->solution_value = n->getPathValue();
+                // clear the queqe
+                this->open_list = std::priority_queue<State<T> *, std::vector<State<T> *>, CompareState>();
                 return backTrace(n);
             }
             std::vector<State<T> *> succerssors = searchable->getAllPossibleStates(n);
@@ -83,19 +88,24 @@ public:
                     curr_state->addPathValue(n->getPathValue()); // add cost
                     open_list.push(curr_state); // add succerssors to open list
                 } else {
-                    double new_path_val = n->getPathValue() + curr_state->getCost();
+                    int new_path_val = n->getPathValue() + curr_state->getCost();
                     if (new_path_val < curr_state->getPathValue()) {
                         // if new path is better than the prev one
                         curr_state->setCameFrom(n); // update dad
                         curr_state->setPathValue(new_path_val); // update path
                         // if not in open add it to open
-                        if (state_to_color.at(curr_state) == BLACK){
+                        if (state_to_color.at(curr_state) == BLACK) {
                             open_list.push(curr_state);
                         }
                     }
                 }
             }
         }
+        this->solution_value = -1;
+        std::vector<State<T> *> empty;
+        // clear the queqe
+        this->open_list = std::priority_queue<State<T> *, std::vector<State<T> *>, CompareState>();
+        return empty;
     }
 
 

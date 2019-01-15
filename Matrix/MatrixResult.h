@@ -19,7 +19,7 @@ public:
         int sol_size=solution.size();
         //TODO check about size-1
         if (sol_size == 0) {
-            return "-1";
+            return "No possible solution";
         }
         for (int i = 0; i < sol_size - 1; ++i) {
 
