@@ -84,7 +84,7 @@ void MyClientHandler::handleClient(int sock_id) {
 
     // arrange the string problem
     replace(problem.begin(), problem.end(), '\n', '$');
-    if (problem.back() == '$') {
+    if (problem.back() == '$') { // take out the last $
         problem.pop_back();
     }
 
