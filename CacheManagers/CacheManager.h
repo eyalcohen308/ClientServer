@@ -22,7 +22,6 @@ public:
     virtual void writeSolutions() = 0;
 
     virtual ~CacheManager() {
-        cout << "CacheManager deleted" << endl;
     }
 };
 
