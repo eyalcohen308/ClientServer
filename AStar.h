@@ -9,7 +9,7 @@
 #include <queue>
 #include <unordered_map>
 #include <algorithm>
-#include "../searchAlgo/Searcher.h"
+#include "Searcher.h"
 #include "AbstractAstarBest.h"
 
 template<class T>

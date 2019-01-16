@@ -6,15 +6,15 @@
 #define CLIENTSERVER_EMPIRICALEXPERIMENT_H
 
 #include <vector>
-#include "Solvers/Solver.h"
-#include "Solvers/StringReverser.h"
-#include "CacheManagers/CacheManager.h"
-#include "CacheManagers/FileCacheManager.h"
-#include "Solvers/SearchSolver.h"
-#include "Algorithms/BreadthFirstSearch.h"
-#include "Algorithms/DepthFirstSearch.h"
-#include "Algorithms/BestFirstSearch.h"
-#include "Algorithms/AStar.h"
+#include "Solver.h"
+#include "StringReverser.h"
+#include "CacheManager.h"
+#include "FileCacheManager.h"
+#include "SearchSolver.h"
+#include "BreadthFirstSearch.h"
+#include "DepthFirstSearch.h"
+#include "BestFirstSearch.h"
+#include "AStar.h"
 #include <string>
 
 using namespace std;

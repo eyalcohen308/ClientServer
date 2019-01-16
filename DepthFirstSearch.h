@@ -8,7 +8,7 @@
 #include<stack>
 #include <vector>
 #include <algorithm>
-#include "../searchAlgo/Searcher.h"
+#include "Searcher.h"
 
 using namespace std;
 

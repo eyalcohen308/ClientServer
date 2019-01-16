@@ -7,7 +7,7 @@
 
 #include <string>
 #include <vector>
-#include "../searchAlgo/State.h"
+#include "State.h"
 
 using namespace std;
 typedef pair<int, int> point;

@@ -4,15 +4,15 @@
 
 #ifndef CLIENTSERVER_CONTROLLER_H
 #define CLIENTSERVER_CONTROLLER_H
-#include "Servers/MySerialServer.h"
-#include "Servers/MyParallelServer.h"
-#include "CacheManagers/FileCacheManager.h"
-#include "Solvers/SearchSolver.h"
-#include "ClientHandlers/MyClientHandler.h"
-#include "Algorithms/BreadthFirstSearch.h"
-#include "Algorithms/DepthFirstSearch.h"
-#include "Algorithms/BestFirstSearch.h"
-#include "Algorithms/AStar.h"
+#include "MySerialServer.h"
+#include "MyParallelServer.h"
+#include "FileCacheManager.h"
+#include "SearchSolver.h"
+#include "MyClientHandler.h"
+#include "BreadthFirstSearch.h"
+#include "DepthFirstSearch.h"
+#include "BestFirstSearch.h"
+#include "AStar.h"
 
 class Controller {
 public:

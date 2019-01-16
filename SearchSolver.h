@@ -8,9 +8,9 @@
 #include <vector>
 #include <string>
 #include "Solver.h"
-#include "../searchAlgo/Searcher.h"
-#include "../Matrix/Matrix.h"
-#include "../Matrix/MatrixResult.h"
+#include "Searcher.h"
+#include "Matrix.h"
+#include "MatrixResult.h"
 enum Color {
     WHITE, GREY, BLACK
 };

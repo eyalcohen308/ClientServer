@@ -7,8 +7,8 @@
 
 
 #include "ClientHandler.h"
-#include "../Solvers/Solver.h"
-#include "../CacheManagers/CacheManager.h"
+#include "Solver.h"
+#include "CacheManager.h"
 #include <vector>
 #include <regex>
 #include <unistd.h>

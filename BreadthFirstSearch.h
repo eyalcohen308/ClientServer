@@ -8,7 +8,7 @@
 
 #include <list>
 #include <algorithm>
-#include "../searchAlgo/Searcher.h"
+#include "Searcher.h"
 
 using namespace std;
 

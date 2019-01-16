@@ -7,7 +7,7 @@
 
 
 #include <string>
-#include "../searchAlgo/Searchable.h"
+#include "Searchable.h"
 
 using namespace std;
 typedef pair<int, int> point;

@@ -6,8 +6,8 @@
 #define CLIENTSERVER_MYTESTCLIENTHANDLER_H
 
 #include "ClientHandler.h"
-#include "../Solvers/Solver.h"
-#include "../CacheManagers/CacheManager.h"
+#include "Solver.h"
+#include "CacheManager.h"
 
 class MyTestClientHandler : ClientHandler {
     Solver<string,string> *solver;

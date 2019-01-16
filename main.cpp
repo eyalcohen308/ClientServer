@@ -1,15 +1,15 @@
 // Tomer Shlasky 204300602
 //
 #include <vector>
-#include "Solvers/Solver.h"
-#include "Solvers/StringReverser.h"
-#include "CacheManagers/CacheManager.h"
-#include "CacheManagers/FileCacheManager.h"
-#include "Solvers/SearchSolver.h"
+#include "Solver.h"
+#include "StringReverser.h"
+#include "CacheManager.h"
+#include "FileCacheManager.h"
+#include "SearchSolver.h"
 
 #include "EmpiricalExperiment.h"
-#include "Servers/MySerialServer.h"
-#include "ClientHandlers/MyClientHandler.h"
+#include "MySerialServer.h"
+#include "MyClientHandler.h"
 #include "Controller.h"
 #include <string>
 

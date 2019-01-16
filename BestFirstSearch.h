@@ -9,7 +9,7 @@
 #include <queue>
 #include <algorithm>
 #include <iostream>
-#include "../searchAlgo/Searcher.h"
+#include "Searcher.h"
 #include "AbstractAstarBest.h"
 
 template<class T>

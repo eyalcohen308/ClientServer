@@ -8,7 +8,7 @@
 #include <queue>
 #include <unordered_map>
 #include <algorithm>
-#include "../searchAlgo/Searcher.h"
+#include "Searcher.h"
 
 template<class T>
 class AbstractAstarBest : public Searcher<T> {
