@@ -21,19 +21,31 @@ private:
     unordered_map<Problem, Solution> data_base;
 
 public:
-
+    /**
+     * Ctor
+     */
     FileCacheManager() {
         loadSolutionsFromDisk();
         pthread_mutex_init(&mut, nullptr);
     }
 
+    /**
+     * check if has solution to problem
+     * @param problem
+     * @return
+     */
     virtual bool hasSolutionTo(const Problem &problem) {
         pthread_mutex_lock(&mut);
-        bool answer = (!(data_base.find(problem) == data_base.end()));
+        bool answer = (data_base.find(problem) != data_base.end());
         pthread_mutex_unlock(&mut);
         return answer;
     }
 
+    /**
+     * return the solution
+     * @param problem
+     * @return
+     */
     virtual Solution getSolutionTo(const Problem &problem) {
         if (hasSolutionTo(problem)) { // safety
             return data_base.at(problem);
@@ -41,6 +53,9 @@ public:
         return NULL;
     }
 
+    /**
+     * load Solutions From Disk
+     */
     virtual void loadSolutionsFromDisk() {
         // save to file each problem and solution.
         fstream input;
@@ -57,6 +72,9 @@ public:
         }
     }
 
+    /**
+     * write solutions to disk
+     */
     virtual void writeSolutions() {
         // save to file each problem and solution.
         fstream input;
@@ -71,6 +89,11 @@ public:
         input.close();
     }
 
+    /**
+     * save solution for problem
+     * @param p
+     * @param s
+     */
     void saveSolutionFor(const Problem p, const Solution s) {
         pthread_mutex_lock(&mut);
         data_base.insert(pair<Problem, Solution>(p, s));
