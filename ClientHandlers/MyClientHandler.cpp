@@ -84,7 +84,7 @@ void MyClientHandler::handleClient(int sock_id) {
 
     // arrange the string problem
     replace(problem.begin(), problem.end(), '\n', '$');
-    if (problem.back() == '$') {
+    if (problem.back() == '$') { // take out the last $
         problem.pop_back();
     }
 
@@ -108,7 +108,7 @@ void MyClientHandler::handleClient(int sock_id) {
  * write Solution To Socket
  * @param sol
  * @param sock_id
- */
+ */AStar
 void MyClientHandler::writeSolutionToSocket(string sol, int sock_id) {
     const char *solution = sol.c_str();
     int n = write(sock_id, solution, CHARS_TO_WRITE);
