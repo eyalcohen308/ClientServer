@@ -53,7 +53,7 @@ public:
         }
     }
 
-    ~FileCacheManager() {
+    virtual void writeSolutions(){
         // save to file each problem and solution.
         fstream input;
         input.open("input.txt", std::ofstream::out | std::ofstream::trunc);
