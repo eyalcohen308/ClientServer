@@ -108,7 +108,7 @@ void MyClientHandler::handleClient(int sock_id) {
  * write Solution To Socket
  * @param sol
  * @param sock_id
- */AStar
+ */
 void MyClientHandler::writeSolutionToSocket(string sol, int sock_id) {
     const char *solution = sol.c_str();
     int n = write(sock_id, solution, CHARS_TO_WRITE);

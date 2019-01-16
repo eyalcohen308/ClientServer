@@ -21,14 +21,14 @@ int main() {
     auto * serial = new MySerialServer(); // server
     auto * cm = new FileCacheManager<string,string>(); // inside- load the solution
 
-    auto *sercher = new BestFirstSearch<pair<int, int>>();
+    auto *sercher = new BreadthFirstSearch<pair<int, int>>();
 
     auto *searchSolver = new SearchSolver<pair<int, int>, string>(sercher);
     auto *client = new MyClientHandler(searchSolver, cm);
     serial->open(5400, client);
     // waiting for char
     cm->writeSolutions();
-//
+
     delete(cm);
     delete (serial);
     delete(sercher);

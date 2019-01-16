@@ -20,6 +20,8 @@ public:
     virtual std::vector<State<T> *> getAllStates() = 0;
 
     virtual void setDistance(State<T> *current) = 0;
+
+    ~Searchable(){};
 };
 
 #endif //CLIENTSERVER_SEARCHABLE_H

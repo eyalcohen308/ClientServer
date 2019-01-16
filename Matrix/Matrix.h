@@ -38,6 +38,14 @@ public:
     virtual void setDistance(State<point> * current);
 
     bool checkIfValidNeighbor(int col, int row);
+
+    ~Matrix(){
+        for (auto &row:matrix) {
+            for (auto &s:row) {
+                delete(s);
+            }
+        }
+    }
 };
 
 
