@@ -1,5 +1,5 @@
 //
-// Created by tomer on 1/3/19.
+// Created by eyal & tomer on 1/3/19.
 //
 
 #include "MySerialServer.h"
@@ -8,7 +8,7 @@
 struct Socket_Data {
     int port;
     int sock_fd;
-    ClientHandler *ch;
+    ClientHandler *client_handler;
     bool *should_stop;
 };
 
@@ -29,7 +29,7 @@ void *threadFunction(void *args) {
 
     while (!*(params->should_stop)) {
         int id = accept(params->sock_fd);
-        params->ch->handleClient(id);
+        params->client_handler->handleClient(id);
         //TODO time handler
     }
 
@@ -82,7 +82,7 @@ void MySerialServer::open(int port, ClientHandler *ch) {
     params->port = port;
     params->sock_fd = this->sock_fd;
     params->should_stop = &(this->should_stop);
-    params->ch = ch;
+    params->client_handler = ch;
     createThread(params);
     string x;
     cin >> x;

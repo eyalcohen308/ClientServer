@@ -1,5 +1,5 @@
 //
-// Created by eyal on 1/13/19.
+// Created by eyal & tomer on 1/13/19.
 //
 
 #ifndef CLIENTSERVER_MYPARALLELSERVER_H
@@ -19,30 +19,32 @@
 #include "Server.h"
 using namespace server_side;
 
-struct dataToSoc{
+struct Socket_Data{
     int port;
-    int sockServer;
-    int sockClient;
-    ClientHandler* ch;
-    bool * shouldStop;
+    int server_socket;
+    int client_socket;
+    ClientHandler* client_handler;
+    bool * need_to_stop;
 };
 
 class MyParallelServer :public Server{
 private:
     pthread_t thread;
-    int clientSock;
-    int serverSocket;
-    bool shouldStop;
+    int server_p_socket;
+    bool need_to_p_stop;
 
 public:
+    /**
+     * Ctor - should'nt stop
+     */
     MyParallelServer(){
-        this->shouldStop = false;
+        this->need_to_p_stop = false;
     }
     virtual void open(int port, ClientHandler* clientHandler);
     virtual void stop();
-    void start(dataToSoc* param);
+    void start(Socket_Data* param);
     void setStop(){
-        this->shouldStop = true;
+        this->need_to_p_stop = true;
     }
 };
 
