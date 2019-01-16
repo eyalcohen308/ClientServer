@@ -1,5 +1,5 @@
 //
-// Created by eyal on 1/13/19.
+// Created by eyal & tomer on 1/13/19.
 //
 
 #include "MyParallelServer.h"
@@ -9,187 +9,172 @@
 
 
 /**
- * the thread that handle the client
+ * handle the client
  * @param arg
  * @return
  */
-void* handleClient(void* arg){
-    //auto args = static_cast<ParamsToUpdate*>(arg);
-    struct dataToSoc* params=(struct dataToSoc*) arg;
-    params->ch->handleClient(params->sockClient);
+void *handleClient(void *arg) {
+    struct Socket_Data *params = (struct Socket_Data *) arg;
+    params->client_handler->handleClient(params->client_socket);
 }
 
 
 /**
- * open the threads for the clients
+ * open threads for the clients
  * @param arg
  * @return
  */
-void* acceptClients(void* arg)
-{
-    //
-    vector<dataToSoc*> cli;
-    vector<pthread_t> forJoin;
-    //
+void *acceptClients(void *arg) {
+    vector<Socket_Data *> clients_vec; // vector for clients
+    vector<pthread_t> threads_vec; // to do the join
 
+    struct Socket_Data *params = (struct Socket_Data *) arg;
 
-    struct dataToSoc* params=(struct dataToSoc*) arg;
-
-    char *hello = "Hello from server";
-    char buffer[256];
-    int  n;
     sockaddr_in client_sock;
-    int clientSocketVal;
-    int clilen = sizeof(client_sock);
+    int sock_client_val;
+    int client_s = sizeof(client_sock);
 
-
-    struct dataToSoc *para = new dataToSoc;
-    para->ch = params->ch;
-    para->sockServer = params->sockServer;
+    // init params
+    struct Socket_Data *para = new Socket_Data;
+    para->client_handler = params->client_handler;
+    para->server_socket = params->server_socket;
     para->port = params->port;
-    para->sockClient = params->sockClient;
-    para->shouldStop = params->shouldStop;
-    //
-    cli.push_back(para);
-    //
+    para->client_socket = params->client_socket;
+    para->need_to_stop = params->need_to_stop;
+    // insert params to vector
+    clients_vec.push_back(para);
 
-    // for the first clien- wait unlimited time t
-    clientSocketVal = ::accept(para->sockServer, (struct sockaddr *) &client_sock, (socklen_t *) &clilen);
-    para->sockClient = clientSocketVal;
-    //push to list to free later
+    /**
+     * for the first client- wait unlimited time t
+     */
+    sock_client_val = ::accept(para->server_socket, (struct sockaddr *) &client_sock, (socklen_t *) &client_s);
+    para->client_socket = sock_client_val;
 
-
-    if (para->sockClient < 0) {
+    if (para->client_socket < 0) {
         throw invalid_argument("connection with client failed");
     }
-    pthread_t threadId;
-    pthread_create(&threadId, nullptr, &handleClient, para);
-    forJoin.push_back(threadId);
-    //now is limited time
-    while (!*(params->shouldStop)){
+    pthread_t thread_id;
+    pthread_create(&thread_id, nullptr, &handleClient, para);
+    threads_vec.push_back(thread_id);
 
+    /**
+     * now, for every client- limited time
+     */
+    while (!*(params->need_to_stop)) {
+        // set timeval
+        timeval time_out;
+        time_out.tv_sec = 1;
+        time_out.tv_usec = 0;
 
-        int new_sock;
+        setsockopt(params->server_socket, SOL_SOCKET, SO_RCVTIMEO, (char *) &time_out, sizeof(time_out));
 
-        timeval timeout;
-        timeout.tv_sec = 1;
-        timeout.tv_usec = 0;
-
-
-        setsockopt(params->sockServer, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
-
-        clientSocketVal = ::accept(params->sockServer, (struct sockaddr *) &client_sock, (socklen_t *) &clilen);
-        if (clientSocketVal < 0)	{
-            if (errno == EWOULDBLOCK)	{
-
-
+        sock_client_val = ::accept(params->server_socket, (struct sockaddr *) &client_sock, (socklen_t *) &client_s);
+        if (sock_client_val < 0) {
+            if (errno == EWOULDBLOCK) {
                 break;
-            }	else	{
-                perror("other error");
+            } else {
+                perror("Error in socket");
                 return nullptr;
             }
-        }else{
-
-            params->sockClient = clientSocketVal;
-            if (params->sockClient < 0) {
+        } else {
+            params->client_socket = sock_client_val;
+            if (params->client_socket < 0) {
                 throw invalid_argument("connection with client failed");
             }
-
-
-            pthread_t threadId;
-
-            struct dataToSoc *para = new dataToSoc;
-            para->ch = params->ch;
-            para->sockServer = params->sockServer;
+            pthread_t id_thread;
+            // init struct
+            struct Socket_Data *para = new Socket_Data;
+            para->client_handler = params->client_handler;
+            para->server_socket = params->server_socket;
             para->port = params->port;
-            para->sockClient = params->sockClient;
-            para->shouldStop = params->shouldStop;
-            //
-            cli.push_back(para);
-            //
+            para->client_socket = params->client_socket;
+            para->need_to_stop = params->need_to_stop;
+            // insert params to vector
+            clients_vec.push_back(para);
 
-            pthread_create(&threadId, nullptr, &handleClient, params);
+            pthread_create(&id_thread, nullptr, &handleClient, params);
 
-            timeout.tv_sec = 0;
-            setsockopt(params->sockClient, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
-            //
-            forJoin.push_back(threadId);
-            //
+            time_out.tv_sec = 0;
+            setsockopt(params->client_socket, SOL_SOCKET, SO_RCVTIMEO, (char *) &time_out, sizeof(time_out));
+            // insert to thread vec
+            threads_vec.push_back(id_thread);
         }
 
     }
 
-
-
-    for (int i =0;i<forJoin.size();++i){
-        pthread_join(forJoin[i], nullptr);
+    /**
+     * wait for all threads to finish
+     */
+    for (int i = 0; i < threads_vec.size(); ++i) {
+        pthread_join(threads_vec[i], nullptr);
 
     }
-    //  pthread_mutex_unlock(&args->getMutex());
 
-    for (int i =0;i<cli.size();++i){
-        delete(cli[i]);
+    /**
+     * delete all structs
+     */
+    for (int i = 0; i < clients_vec.size(); ++i) {
+        delete (clients_vec[i]);
     }
-    return nullptr;
+
+    return nullptr; // finish
 }
 
 /**
- * initilize some parameters from the struct and call to the function that create the socket
+ * initilize parameters from the struct
+ * call to function for creating a socket
  * @param port
  * @param clientHandler
  * @return
  */
-void MyParallelServer:: open(int port, ClientHandler* clientHandler){
-    //ParamsToUpdate* paramsToUpdate = new  ParamsToUpdate();
-    //paramsToUpdate->setPortServer(port);
-    struct dataToSoc *params = new dataToSoc;
+void MyParallelServer::open(int port, ClientHandler *clientHandler) {
+    // init struct
+    struct Socket_Data *params = new Socket_Data;
     params->port = port;
-    params->shouldStop = &(this->shouldStop);
-    params->ch = clientHandler;
-    //calls the function opens the socket
-    //paramsToUpdate->setClient(clientHandler);
-    start(params);
-    delete(params);
+    params->need_to_stop = &(this->need_to_p_stop);
+    params->client_handler = clientHandler;
+    start(params); //calls the function opens the socket
+    delete (params); // free
 }
-
 
 /**
  * create the socket
  * @param params
  */
-void MyParallelServer:: start(dataToSoc* params){
-    //Create a socket point
-    this->serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if (this->serverSocket == -1) {
+void MyParallelServer::start(Socket_Data *params) {
+    // create socket
+    this->server_p_socket = socket(AF_INET, SOCK_STREAM, 0);
+    if (this->server_p_socket == -1) {
         throw invalid_argument("Error opening socket");
     }
 
-    params->sockServer=serverSocket;
-    //paramsToUpdate->defineSocketServer(serverSocket);
     // Define the client socket's structures
+    params->server_socket = server_p_socket;
     struct sockaddr_in serverAddress;
-    bzero((void *)&serverAddress, sizeof(serverAddress));
+    bzero((void *) &serverAddress, sizeof(serverAddress));
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = INADDR_ANY;
     serverAddress.sin_port = htons(params->port);
-    if (bind(serverSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1) {
+    if (bind(server_p_socket, (struct sockaddr *) &serverAddress, sizeof(serverAddress)) == -1) {
         perror("ERROR on binding");
         exit(1);
     }
 
-    if (listen(serverSocket, SOMAXCONN) < 0)   {
+    if (listen(server_p_socket, SOMAXCONN) < 0) {
         perror("listen error");
         exit(1);
     }
+    // if no error - call to thread and accept clients
     pthread_create(&thread, nullptr, &acceptClients, params);
-
+    // join
     pthread_join(thread, nullptr);
 }
 
 /**
- * finish with the Socket
+ * stop all threads
  */
-void MyParallelServer:: stop(){
+void MyParallelServer::stop() {
     pthread_cancel(thread);
-    close(this->serverSocket);
+    close(this->server_p_socket);
 }
+

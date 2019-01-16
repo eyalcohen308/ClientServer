@@ -1,5 +1,5 @@
 //
-// Created by eyal on 1/13/19.
+// Created by eyal & tomer on 1/13/19.
 //
 
 #ifndef CLIENTSERVER_MATRIXRESULT_H
