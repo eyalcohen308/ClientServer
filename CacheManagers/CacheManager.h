@@ -22,7 +22,7 @@ public:
     virtual void writeSolutions() = 0;
 
     virtual ~CacheManager() {
-        cout << "hello" << endl;
+        cout << "CacheManager deleted" << endl;
     }
 };
 

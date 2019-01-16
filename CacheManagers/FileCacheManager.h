@@ -40,7 +40,7 @@ public:
     virtual void loadSolutionsFromDisk() {
         // save to file each problem and solution.
         fstream input;
-        input.open("input.txt", fstream::in | fstream::out | fstream::app);
+        input.open("ProblemsAndSolutions.txt", fstream::in | fstream::out | fstream::app);
         if (!input.is_open()) {
             throw runtime_error("unable to open file");
         }
@@ -56,7 +56,7 @@ public:
     virtual void writeSolutions(){
         // save to file each problem and solution.
         fstream input;
-        input.open("input.txt", std::ofstream::out | std::ofstream::trunc);
+        input.open("ProblemsAndSolutions.txt", std::ofstream::out | std::ofstream::trunc);
 
         for (auto it : data_base) {
             // write the problem data to file.
