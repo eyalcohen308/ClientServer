@@ -111,7 +111,7 @@ void MyClientHandler::handleClient(int sock_id) {
  */
 void MyClientHandler::writeSolutionToSocket(string sol, int sock_id) {
     const char *solution = sol.c_str();
-    int n = write(sock_id, solution, CHARS_TO_WRITE);
+    int n = write(sock_id, solution, strlen(solution));
     if (n < 0) {
         perror("ERROR writing to socket");
         exit(1);

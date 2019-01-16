@@ -10,9 +10,9 @@
 namespace server_side {
     class Server {
     public:
-//        Server() {}; // ctor- empty for now
-        virtual void open(int port, ClientHandler *c)=0;
-// getting port to listen, open the server and wait for clients
+        // getting port to listen, open the server and wait for clients
+        virtual void open(int port, ClientHandler *c) = 0;
+
         virtual void stop() = 0; // close the server
     };
 }

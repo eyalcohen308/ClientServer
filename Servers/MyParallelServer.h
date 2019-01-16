@@ -17,37 +17,33 @@
 #include <pthread.h>
 
 #include "Server.h"
-
-#define MAX_CONNECTED_CLIENTS 1
 using namespace server_side;
 
-struct SocketData {
+struct dataToSoc{
     int port;
     int sockServer;
     int sockClient;
-    ClientHandler *ch;
-    bool *shouldStop;
+    ClientHandler* ch;
+    bool * shouldStop;
 };
-class MyParallelServer : public Server {
+
+class MyParallelServer :public Server{
+private:
     pthread_t thread;
     int clientSock;
     int serverSocket;
-    bool stoped;
+    bool shouldStop;
+
 public:
-    MyParallelServer() {
-        this->stoped = false;
+    MyParallelServer(){
+        this->shouldStop = false;
     }
-
-    virtual void open(int port, ClientHandler *clientHandler);
-
+    virtual void open(int port, ClientHandler* clientHandler);
     virtual void stop();
-
-    void start(SocketData *param);
-
-    void setStop() {
-        this->stoped = true;
+    void start(dataToSoc* param);
+    void setStop(){
+        this->shouldStop = true;
     }
-
 };
 
 #endif //CLIENTSERVER_MYPARALLELSERVER_H
