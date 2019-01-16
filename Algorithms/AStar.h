@@ -10,7 +10,6 @@
 #include <unordered_map>
 #include <algorithm>
 #include "../searchAlgo/Searcher.h"
-
 template<class T>
 class AStar : public Searcher<T> {
     enum Color {
