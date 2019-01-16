@@ -28,7 +28,7 @@ int main() {
     serial->open(5400, client);
     // waiting for char
     cm->writeSolutions();
-
+//
     delete(cm);
     delete (serial);
     delete(sercher);
