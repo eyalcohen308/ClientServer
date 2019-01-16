@@ -17,23 +17,27 @@ template<class Problem, class Solution>
 
 class FileCacheManager : public CacheManager<Problem, Solution> {
 private:
+    pthread_mutex_t mut;
     unordered_map<Problem, Solution> data_base;
 
 public:
 
     FileCacheManager() {
         loadSolutionsFromDisk();
+        pthread_mutex_init(&mut, nullptr);
     }
 
     virtual bool hasSolutionTo(const Problem &problem) {
-        return (!(data_base.find(problem) == data_base.end()));
+        pthread_mutex_lock(&mut);
+        bool answer = (!(data_base.find(problem) == data_base.end()));
+        pthread_mutex_unlock(&mut);
+        return answer;
     }
 
     virtual Solution getSolutionTo(const Problem &problem) {
-        if (hasSolutionTo(problem)) {
+        if (hasSolutionTo(problem)) { // safety
             return data_base.at(problem);
         }
-        //TODO: decide if null or execption.
         return NULL;
     }
 
@@ -47,13 +51,13 @@ public:
         string line;
         while (getline(input, line)) {
             size_t pos = line.find("end$");
-            string problem = line.substr(0, pos+3);
+            string problem = line.substr(0, pos + 3);
             string solution = line.substr(pos + 4, line.length() - 1);
-            data_base.insert(pair<Problem,Solution>(problem,solution));
+            data_base.insert(pair<Problem, Solution>(problem, solution));
         }
     }
 
-    virtual void writeSolutions(){
+    virtual void writeSolutions() {
         // save to file each problem and solution.
         fstream input;
         input.open("ProblemsAndSolutions.txt", std::ofstream::out | std::ofstream::trunc);
@@ -68,7 +72,18 @@ public:
     }
 
     void saveSolutionFor(const Problem p, const Solution s) {
+        pthread_mutex_lock(&mut);
         data_base.insert(pair<Problem, Solution>(p, s));
+        pthread_mutex_unlock(&mut);
+    }
+
+    /**
+     * Dtor
+     * save solutions and delet mutex
+     */
+    ~FileCacheManager() {
+        writeSolutions();
+        pthread_mutex_destroy(&mut);
     }
 };
 

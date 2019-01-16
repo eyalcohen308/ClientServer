@@ -13,5 +13,5 @@ searchAlgo/Searchable.h searchAlgo/Searcher.h searchAlgo/State.cpp searchAlgo/St
 
         Algorithms/BestFirstSearch.cpp Algorithms/BestFirstSearch.h Servers/MyParallelServer.cpp Servers/MyParallelServer.h
 
-ClientHandlers/MyClientHandler.cpp ClientHandlers/MyClientHandler.h Matrix/Matrix.cpp Matrix/Matrix.h Matrix/MatrixResult.cpp Matrix/MatrixResult.h Solvers/SearchSolver.cpp Solvers/SearchSolver.h Algorithms/BreadthFirstSearch.cpp Algorithms/BreadthFirstSearch.h Algorithms/DepthFirstSearch.cpp Algorithms/DepthFirstSearch.h Algorithms/AStar.cpp Algorithms/AStar.h EmpiricalExperiment.cpp EmpiricalExperiment.h Algorithms/AbstractAstarBest.cpp Algorithms/AbstractAstarBest.h)
+ClientHandlers/MyClientHandler.cpp ClientHandlers/MyClientHandler.h Matrix/Matrix.cpp Matrix/Matrix.h Matrix/MatrixResult.cpp Matrix/MatrixResult.h Solvers/SearchSolver.cpp Solvers/SearchSolver.h Algorithms/BreadthFirstSearch.cpp Algorithms/BreadthFirstSearch.h Algorithms/DepthFirstSearch.cpp Algorithms/DepthFirstSearch.h Algorithms/AStar.cpp Algorithms/AStar.h EmpiricalExperiment.cpp EmpiricalExperiment.h Algorithms/AbstractAstarBest.cpp Algorithms/AbstractAstarBest.h Controller.cpp Controller.h)
 
